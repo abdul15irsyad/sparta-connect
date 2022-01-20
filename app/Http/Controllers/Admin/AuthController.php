@@ -87,17 +87,32 @@ class AuthController extends Controller
             ->where('type', 'verification')
             ->first();
 
-        TokenHelper::check_token($token, 'admin-forgot-password');
+        // if token invalid
+        if (!$token) {
+            return redirect()
+                ->route('admin-login')
+                ->with('type', 'warning')
+                ->with('message', 'invalid link');
+        }
+
+        // if token expired
+        if (Carbon::now()->gt($token->expired_at)) {
+            $token->status = 0;
+            $token->save();
+            return redirect()
+                ->route('admin-login')
+                ->with('type', 'warning')
+                ->with('message', 'link expired, please make a new forgot password request');
+        }
 
         $admin_user = AdminUser::find($token->tokenable->id);
         // if admin user not found
         if (!$admin_user) {
             return redirect()
-                ->route('forgot-password')
+                ->route('admin-forgot-password')
                 ->with('type', 'warning')
                 ->with('message', 'invalid link');
         }
-
 
         // update token
         $token->status = 0;
@@ -193,7 +208,23 @@ class AuthController extends Controller
             ->where('type', 'forgot_password')
             ->first();
 
-        TokenHelper::check_token($token, 'admin-forgot-password');
+        // if token invalid
+        if (!$token) {
+            return redirect()
+                ->route('admin-forgot-password')
+                ->with('type', 'warning')
+                ->with('message', 'invalid link');
+        }
+
+        // if token expired
+        if (Carbon::now()->gt($token->expired_at)) {
+            $token->status = 0;
+            $token->save();
+            return redirect()
+                ->route('admin-forgot-password')
+                ->with('type', 'warning')
+                ->with('message', 'link expired, please make a new request');
+        }
 
         $admin_user = AdminUser::find($token->tokenable->id);
         // if admin user not found
@@ -229,7 +260,23 @@ class AuthController extends Controller
             ->where('type', 'forgot_password')
             ->first();
 
-        TokenHelper::check_token($token, 'admin-forgot-password');
+        // if token invalid
+        if (!$token) {
+            return redirect()
+                ->route('admin-forgot-password')
+                ->with('type', 'warning')
+                ->with('message', 'invalid link');
+        }
+
+        // if token expired
+        if (Carbon::now()->gt($token->expired_at)) {
+            $token->status = 0;
+            $token->save();
+            return redirect()
+                ->route('admin-forgot-password')
+                ->with('type', 'warning')
+                ->with('message', 'link expired, please make a new request');
+        }
 
         // update token
         $token->status = 0;

@@ -14,7 +14,7 @@ use Illuminate\Queue\SerializesModels;
 class SendEMail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $user, $data;
+    protected $email, $data;
 
     public function __construct($email, $data)
     {

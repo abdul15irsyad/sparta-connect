@@ -27,6 +27,17 @@ a[title]:after {
   border-radius: 3px !important;
 }
 
+.icheck-primary>input:first-child+input[type=hidden]+label::before, .icheck-primary>input:first-child+label::before{
+  border-radius: 5px;
+}
+.icheck-primary>input:first-child:hover+input[type=hidden]+label::before, .icheck-primary>input:first-child:hover+label::before{
+  border-color: #007bff;
+}
+.icheck-primary>input:first-child:checked+input[type=hidden]+label::before, .icheck-primary>input:first-child:checked+label::before{
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
 body{
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
 }

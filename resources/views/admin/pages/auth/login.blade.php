@@ -26,8 +26,20 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="text-right mb-3">
-                            <a href="{{ route('admin-forgot-password') }}" class="btn btn-link text-sm">Forgot Password?</a>
+                        <div class="row align-items-center my-3">
+                            <div class="col-lg-6 col-12">
+                                <div class="input-group input-password mb-0">
+                                    <div class="icheck-primary">
+                                        <input type="checkbox" id="remember" name="remember">
+                                        <label for="remember">Remember Me</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-12">
+                                <div class="text-right">
+                                    <a href="{{ route('admin-forgot-password') }}" class="btn btn-link">Forgot Password?</a>
+                                </div>
+                            </div>
                         </div>
                         <div class="row justify-content-end">
                             <!-- /.col -->

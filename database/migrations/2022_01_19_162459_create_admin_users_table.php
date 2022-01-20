@@ -18,6 +18,7 @@ class CreateAdminUsersTable extends Migration
             $table->string('password');
             $table->foreignId('admin_role_id')->constrained('admin_roles');
             $table->tinyInteger('status')->default(1);
+            $table->rememberToken();
             $table->timestamps();
             $table->index('name');
             $table->index('username');

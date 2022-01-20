@@ -41,7 +41,7 @@ class MailHelper
         // send token to user email
         $route = $user_type == 'App\Models\AdminUser' ? 'admin-reset-password' : 'reset-password';
         $data = [
-            'subject' => $data_email['subject'],
+            'subject' => $data_email['subject'] . ' - ' . config('app.name'),
             'user' => $user,
             'token' => $token,
             'url' => route($route, ['token' => $token->token]),

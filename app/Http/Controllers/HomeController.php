@@ -8,6 +8,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        return 'Home';
+        $data = [
+            'title' => 'Home',
+        ];
+        return view('pages.home', $data);
     }
 }

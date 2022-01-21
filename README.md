@@ -1,5 +1,6 @@
 # Sparta Connect
 Sparta connection app
+![Sparta Connect Screenshot](https://raw.githubusercontent.com/abdul15irsyad/sparta-connect/master/public/images/login-sparta-connect.jpeg)
 
 ## Tech Stack
 - PHP 7.4+

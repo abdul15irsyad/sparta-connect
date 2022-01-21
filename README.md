@@ -2,7 +2,7 @@
 Sparta connection app
 
 ## Tech Stack
-- PHP > 7.4
+- PHP 7.4+
 - Laravel 8
 - Bootstrap 5 (Web) & Bootstrap 4 (Admin)
 

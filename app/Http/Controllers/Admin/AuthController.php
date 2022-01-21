@@ -58,7 +58,7 @@ class AuthController extends Controller
         // if admin user not verified
         if (!$admin_user->email_verified_at) {
             return redirect()
-                ->route('admin-login')
+                ->back()
                 ->withInput()
                 ->with('type', 'warning')
                 ->with('message', 'please verify your email first');

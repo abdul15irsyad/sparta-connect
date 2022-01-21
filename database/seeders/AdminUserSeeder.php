@@ -6,7 +6,6 @@ use DB, Hash, MailHelper;
 use Carbon\Carbon;
 use App\Models\AdminUser;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Mail;
 
 class AdminUserSeeder extends Seeder
 {
@@ -45,11 +44,10 @@ class AdminUserSeeder extends Seeder
             $admin_user->admin_role_id = $row['admin_role_id'];
             $admin_user->save();
 
+            // send token to emai
             if ($verify_email) {
-                // send activation token to user email
                 $admin_user = AdminUser::where('username', $row['username'])->first();
 
-                // create new token and then send to email
                 $data = [
                     'subject' => 'Email Verification',
                     'markdown' => 'mails.verify-email',

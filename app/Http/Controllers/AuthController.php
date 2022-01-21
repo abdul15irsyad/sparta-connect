@@ -23,6 +23,61 @@ class AuthController extends Controller
         return view('pages.auth.login', $data);
     }
 
+    public function login_process(Request $request)
+    {
+        $username = $request->input('username');
+        $password = $request->input('password');
+        // $remember_me = $request->input('remember') == "on" ? true : false;
+        $remember_me = true;
+
+        $field = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $data = [
+            $field => $username,
+            'password'  => $password,
+        ];
+
+        // find user
+        $user = User::where($field, $username)->first();
+        if (!$user) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('type', 'warning')
+                ->with('message', 'username or password incorrect');
+        }
+
+        // check password
+        $auth = Hash::check($password, $user->password);
+        if (!$auth) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('type', 'warning')
+                ->with('message', 'username or password incorrect');
+        }
+
+        // if admin user not verified
+        if (!$user->email_verified_at) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('type', 'warning')
+                ->with('message', 'please verify your email first');
+        }
+
+        // if admin user not active
+        if (!$user->status) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('type', 'warning')
+                ->with('message', 'your account is not active');
+        }
+        auth('web')->attempt($data, $remember_me);
+
+        return redirect()->route('home');
+    }
+
     public function forgot_password()
     {
         $data = [

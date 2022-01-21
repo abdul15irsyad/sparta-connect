@@ -13,7 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // $this->call(ProvinceSeeder::class);
+        // $this->call(RegencySeeder::class);
+        // $this->call(DistrictSeeder::class);
         $this->call(AdminRoleSeeder::class);
         $this->call(AdminUserSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(AddressSeeder::class);
+        $this->call(ContactTypeSeeder::class);
+        $this->call(ContactSeeder::class);
     }
 }

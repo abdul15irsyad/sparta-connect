@@ -58,3 +58,8 @@ Route::prefix('admin')->group(function () {
         });
     });
 });
+
+//example
+Route::get('/welcome', function () {
+    return view('welcome');
+});

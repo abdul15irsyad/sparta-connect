@@ -35,3 +35,8 @@ php artisan migrate --seed
 ```bash
 php artisan serve
 ```
+
+7. if you want to use some email function run `queue:work` dont forget to setup the smtp (use your mailtrap account) in `.env`
+```bash
+php artisan queue:work
+```

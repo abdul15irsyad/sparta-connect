@@ -4,12 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Helpers\MailHelper;
-use App\Helpers\TokenHelper;
 use App\Models\Token;
 use App\Models\AdminUser;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 
@@ -289,17 +287,17 @@ class AuthController extends Controller
         $admin_user->save();
 
         // notify user
-        $data = [
-            'database' => [
-                'title' => 'Reset Password Success',
-                'desc' => 'your password has been successfully changed'
-            ],
-            'mail' => [
-                'subject' => 'Reset Password Success',
-                'markdown' => 'mails.reset-password-success',
-                'user' => $admin_user,
-            ]
-        ];
+        // $data = [
+        //     'database' => [
+        //         'title' => 'Reset Password Success',
+        //         'desc' => 'your password has been successfully changed'
+        //     ],
+        //     'mail' => [
+        //         'subject' => 'Reset Password Success',
+        //         'markdown' => 'mails.reset-password-success',
+        //         'user' => $admin_user,
+        //     ]
+        // ];
         // $user->notify(new UserNotification($data));
 
         // input activity log

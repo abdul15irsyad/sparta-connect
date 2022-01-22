@@ -10,7 +10,7 @@ class CreateTokensTable extends Migration
     {
         Schema::create('tokens', function (Blueprint $table) {
             $table->id();
-            $table->string('token')->unique();
+            $table->string('token', 100);
             $table->enum('type', ['verification', 'forgot_password']);
             $table->tinyInteger('status')->default(1);
             $table->datetime('used_at')->nullable();

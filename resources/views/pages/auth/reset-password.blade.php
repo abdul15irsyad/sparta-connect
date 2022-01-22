@@ -20,6 +20,7 @@
                             </div>
                             <form action="{{ route('reset-password') }}" method="post" class="signin-form">
                                 @csrf
+                                <input type="hidden" name="token" value="{{ old('token', $token->token) }}">
                                 <div class="form-group mb-3">
                                     <label class="label" for="new_password">New Password</label>
                                     <input type="password" class="form-control" placeholder="your new password"

@@ -3,7 +3,6 @@
 namespace App\Helpers;
 
 use App\Models\Token;
-use Carbon\Carbon;
 use DB, Str;
 
 class TokenHelper
@@ -12,7 +11,7 @@ class TokenHelper
     {
         // loop generate token if exist
         do {
-            $token = Str::random(64);
+            $token = Str::random(32);
             $token_exist = Token::where('token', $token)
                 ->where('type', $type)
                 ->where('status', 1)

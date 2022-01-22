@@ -1,0 +1,8 @@
+:focus, :active {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.form-control.is-invalid {
+    background-image: none !important;
+}

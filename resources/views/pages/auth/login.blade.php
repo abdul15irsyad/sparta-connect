@@ -10,18 +10,22 @@
             <div class="row justify-content-center">
                 <div class="col-md-12 col-lg-10">
                     <div class="wrap d-md-flex">
-                        <div class="img" style="background-image:url({{ asset('images/auth/bg-auth-1.jpg') }})">
+                        <div class="img d-md-block d-none"
+                            style="background-image:url({{ asset('images/auth/bg-auth-1.jpg') }})">
                         </div>
                         <div class="login-wrap p-4 p-md-5">
                             <div>
                                 <h3 class="fw-bold text-md-left text-center">Login</h3>
                             </div>
+                            @if (session('message'))
+                                @include('includes.alert',['dismissible'=>true,'message'=>session('message'),'type'=>session('type')])
+                            @endif
                             <form action="{{ route('login') }}" method="post" class="signin-form">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label class="label" for="username">Username</label>
                                     <input type="text" class="form-control" placeholder="username or email"
-                                        name="username" id="username" />
+                                        name="username" id="username" value="{{ old('username') }}" />
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="label" for="password">Password</label>
@@ -31,7 +35,7 @@
                                 <div class="form-group d-md-flex">
                                     <div>
                                         <label class="checkbox-wrap checkbox-primary mb-0">Remember Me
-                                            <input type="checkbox">
+                                            <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>

@@ -6,6 +6,10 @@ use App\Http\Controllers\AuthController;
 // admin
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\ActivityLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +65,22 @@ Route::prefix('admin')->group(function () {
         // dashboard
         Route::prefix('dashboard')->group(function () {
             Route::get('/', [DashboardController::class, 'index'])->name('admin-dashboard');
+        });
+        // admins
+        Route::prefix('admins')->group(function () {
+            Route::get('/', [AdminController::class, 'index'])->name('admin-admins');
+        });
+        // roles
+        Route::prefix('roles')->group(function () {
+            Route::get('/', [RoleController::class, 'index'])->name('admin-roles');
+        });
+        // permissions
+        Route::prefix('permissions')->group(function () {
+            Route::get('/', [PermissionController::class, 'index'])->name('admin-permissions');
+        });
+        // activity-log
+        Route::prefix('activity-log')->group(function () {
+            Route::get('/', [ActivityLogController::class, 'index'])->name('admin-activity-log');
         });
         // auth
         Route::prefix('auth')->group(function () {

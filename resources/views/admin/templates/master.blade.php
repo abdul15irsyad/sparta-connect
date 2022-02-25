@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('admin/adminlte/dist/css/adminlte.min.css') }} ">
     <!-- Icheck -->
     <link rel="stylesheet" href="{{ asset('admin/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <!-- Custom Style -->
+    <!-- Style -->
     <link rel="stylesheet" href="{{ asset('admin/css/style.css') }} ">
     @yield('style')
 </head>

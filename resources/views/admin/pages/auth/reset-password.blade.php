@@ -19,7 +19,7 @@
                                     <b>(A-Z)</b>, and number <b>(0-9)</b></span>
                             </div>
                         @endif
-                        <form action="{{ route('admin-reset-password-process') }}" method="post" autocomplete="off">
+                        <form action="{{ route('admin.reset-password.process') }}" method="post" autocomplete="off">
                             @csrf
                             <div class="mb-3">
                                 <div class="input-group input-password">
@@ -62,7 +62,7 @@
                         </form>
                     </div>
                     <div class="card-footer">
-                        <a href="{{ route('admin-login') }}" class="btn btn-transparent text-dark"><i
+                        <a href="{{ route('admin.login') }}" class="btn btn-transparent text-dark"><i
                                 class="fas fa-fw fa-chevron-left"></i> Login</a>
                     </div>
                     <!-- /.card-footer -->

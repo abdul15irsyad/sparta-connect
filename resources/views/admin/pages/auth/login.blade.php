@@ -14,7 +14,7 @@
                         @if (session('message'))
                             @include('admin.includes.alert',['dismissible'=>true,'message'=>session('message'),'type'=>session('type')])
                         @endif
-                        <form action="{{ route('admin-login') }}" method="post" autocomplete="off">
+                        <form action="{{ route('admin.login.process') }}" method="post" autocomplete="off">
                             @csrf
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" name="username" placeholder="username or email"
@@ -24,8 +24,8 @@
                                 <input type="password" class="form-control" name="password" placeholder="********">
                                 <div class="input-group-append">
                                     <div class="input-group-text">
-                                        <span class="fas fa-eye btn-show-password" data-toogle="tooltip"
-                                            title="show"></span>
+                                        <span class="fas fa-fw fa-eye btn-show-password" data-toggle="tooltip"
+                                            data-placement="top" title="show"></span>
                                     </div>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="col-lg-6 col-12">
                                     <div class="text-right">
-                                        <a href="{{ route('admin-forgot-password') }}" class="btn btn-link">Forgot
+                                        <a href="{{ route('admin.forgot-password') }}" class="btn btn-link">Forgot
                                             Password?</a>
                                     </div>
                                 </div>

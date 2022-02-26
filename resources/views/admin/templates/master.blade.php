@@ -12,13 +12,15 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="{{ asset('admin/adminlte/plugins/fontawesome-free/css/all.min.css') }} ">
+    {{-- <link rel="stylesheet" href="{{ asset('admin/adminlte/plugins/fontawesome-free/css/all.min.css') }} "> --}}
+    <link rel="stylesheet" href="{{ asset('fontawesome/css/all.min.css') }} ">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('admin/adminlte/dist/css/adminlte.min.css') }} ">
     <!-- Icheck -->
     <link rel="stylesheet" href="{{ asset('admin/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <!-- Style -->
+    <!-- Custom Style -->
     <link rel="stylesheet" href="{{ asset('admin/css/style.css') }} ">
+    <link rel="stylesheet" href="{{ asset('admin/css/mobile.css') }}">
     @yield('style')
 </head>
 @yield('body')
@@ -28,10 +30,12 @@
 <script src="{{ asset('admin/adminlte/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap -->
 <script src="{{ asset('admin/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- Popper -->
+<script src="{{ asset('admin/adminlte/plugins/popper/popper.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('admin/adminlte/dist/js/adminlte.js') }}"></script>
 <!-- Custom Javascript -->
-<script src="{{ asset('admin/js/script.js') }}"></script>
+<script type="text/javascript" src="{{ asset('admin/js/script.js') }}"></script>
 @yield('javascript')
 </body>
 

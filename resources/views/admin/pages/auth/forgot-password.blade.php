@@ -15,7 +15,7 @@
                             @include('admin.includes.alert',['dismissible'=>true,'message'=>session('message'),'type'=>session('type')])
                         @endif
                         <p class="text-center text-muted text-sm">we will send a link by email to change your password</p>
-                        <form action="{{ route('admin-forgot-password-process') }}" method="post" autocomplete="off">
+                        <form action="{{ route('admin.forgot-password.process') }}" method="post" autocomplete="off">
                             @csrf
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control @error('email') is-invalid @enderror" name="email"
@@ -35,7 +35,7 @@
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <a href="{{ route('admin-login') }}" class="btn btn-transparent text-dark">Back to Login</a>
+                        <a href="{{ route('admin.login') }}" class="btn btn-transparent text-dark">Back to Login</a>
                     </div>
                     <!-- /.card-footer -->
                 </div>

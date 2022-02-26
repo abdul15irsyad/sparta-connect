@@ -72,7 +72,7 @@ class AuthController extends Controller
         }
         auth('admin')->attempt($data, $remember_me);
 
-        return redirect()->route('admin-dashboard');
+        return redirect()->route('admin.dashboard');
     }
 
     public function verify_email_process(Request $request)
@@ -88,7 +88,7 @@ class AuthController extends Controller
         // if token invalid
         if (!$token) {
             return redirect()
-                ->route('admin-login')
+                ->route('admin.login')
                 ->with('type', 'warning')
                 ->with('message', 'invalid link');
         }
@@ -98,7 +98,7 @@ class AuthController extends Controller
             $token->status = 0;
             $token->save();
             return redirect()
-                ->route('admin-login')
+                ->route('admin.login')
                 ->with('type', 'warning')
                 ->with('message', 'link expired, please make a new forgot password request');
         }
@@ -107,7 +107,7 @@ class AuthController extends Controller
         // if admin user not found
         if (!$admin_user) {
             return redirect()
-                ->route('admin-forgot-password')
+                ->route('admin.forgot-password')
                 ->with('type', 'warning')
                 ->with('message', 'invalid link');
         }
@@ -136,7 +136,7 @@ class AuthController extends Controller
         // $admin_user->notify(new UserNotification($data));
 
         return redirect()
-            ->route('admin-login')
+            ->route('admin.login')
             ->with('type', 'success')
             ->with('message', 'your email has been verified');
     }
@@ -209,7 +209,7 @@ class AuthController extends Controller
         // if token invalid
         if (!$token) {
             return redirect()
-                ->route('admin-forgot-password')
+                ->route('admin.forgot-password')
                 ->with('type', 'warning')
                 ->with('message', 'invalid link');
         }
@@ -219,7 +219,7 @@ class AuthController extends Controller
             $token->status = 0;
             $token->save();
             return redirect()
-                ->route('admin-forgot-password')
+                ->route('admin.forgot-password')
                 ->with('type', 'warning')
                 ->with('message', 'link expired, please make a new request');
         }
@@ -228,7 +228,7 @@ class AuthController extends Controller
         // if admin user not found
         if (!$admin_user) {
             return redirect()
-                ->route('forgot-password')
+                ->route('admin.forgot-password')
                 ->with('type', 'warning')
                 ->with('message', 'invalid link');
         }
@@ -261,7 +261,7 @@ class AuthController extends Controller
         // if token invalid
         if (!$token) {
             return redirect()
-                ->route('admin-forgot-password')
+                ->route('admin.forgot-password')
                 ->with('type', 'warning')
                 ->with('message', 'invalid link');
         }
@@ -271,7 +271,7 @@ class AuthController extends Controller
             $token->status = 0;
             $token->save();
             return redirect()
-                ->route('admin-forgot-password')
+                ->route('admin.forgot-password')
                 ->with('type', 'warning')
                 ->with('message', 'link expired, please make a new request');
         }
@@ -306,7 +306,7 @@ class AuthController extends Controller
         //     ->causedBy($admin_user);
 
         return redirect()
-            ->route('admin-login')
+            ->route('admin.login')
             ->with('type', 'success')
             ->with('message', 'password successfully changed, please login with a new password');
     }
@@ -315,6 +315,6 @@ class AuthController extends Controller
     {
         auth('admin')->logout();
         return redirect()
-            ->route('admin-login');
+            ->route('admin.login');
     }
 }

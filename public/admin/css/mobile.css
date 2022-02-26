@@ -1,0 +1,16 @@
+@media screen and (max-width:767px) {
+
+    .table.datatable th,
+    .table.datatable td {
+        white-space: nowrap;
+    }
+
+    .dataTables_length {
+        display: none;
+    }
+
+    /* at page roles index */
+    .roles-index .table.datatable td:nth-child(3) {
+        white-space: normal;
+    }
+}

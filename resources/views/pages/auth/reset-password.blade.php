@@ -18,7 +18,7 @@
                                             letters <b>(a-z)</b>, uppercase <b>(A-Z)</b>, and number <b>(0-9)</b></span></p>
                                 </div>
                             </div>
-                            <form action="{{ route('reset-password') }}" method="post" class="signin-form">
+                            <form action="{{ route('reset-password.process') }}" method="post" class="signin-form">
                                 @csrf
                                 <input type="hidden" name="token" value="{{ old('token', $token->token) }}">
                                 <div class="form-group mb-3">

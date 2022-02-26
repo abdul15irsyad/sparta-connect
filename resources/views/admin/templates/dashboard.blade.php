@@ -6,8 +6,6 @@
     <!-- Component Style -->
     <link rel="stylesheet" href="{{ asset('admin/css/sidebar.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/css/navbar.css') }}">
-    <!-- Custom Style -->
-    <link rel="stylesheet" href="{{ asset('admin/css/custom-style.css') }}">
     @yield('content-style')
 @endsection
 
@@ -32,28 +30,37 @@
         <!-- overlayScrollbars -->
         <script src="{{ asset('admin/adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 
-        <!-- AdminLTE for demo purposes -->
-        <script src="{{ asset('admin/adminlte/dist/js/demo.js') }}"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <script src="{{ asset('admin/adminlte/dist/js/pages/dashboard2.js') }}"></script>
         <script type="text/javascript">
             let defaultDatatables = {
-                search: {
-                    caseInsensitive: false
-                },
                 order: [1, 'asc'],
                 processing: true,
                 serverSide: true,
-                responsive: true,
+                responsive: false,
+                autoWidth: false,
                 pageLength: 10,
                 lengthMenu: [
                     [5, 10, 20, 50],
                     [5, 10, 20, 50]
                 ],
                 language: {
-                    searchPlaceholder: "search here..."
+                    search: "",
+                    searchPlaceholder: "search here...",
                 },
+                fnDrawCallback: function(oSettings) {
+                    // disable pagination if there is only one page in datatables
+                    if (oSettings._iDisplayLength > oSettings.fnRecordsDisplay()) {
+                        $(oSettings.nTableWrapper).find('.dataTables_paginate').hide();
+                    } else {
+                        $(oSettings.nTableWrapper).find('.dataTables_paginate').show();
+                    }
+                }
             };
+            let datatableDefaultInitComplete = function() {
+                initTooltip()
+                btnDelete()
+            }
             let defaultDatepicker = {
                 autoclose: true,
                 format: 'd MM yyyy',

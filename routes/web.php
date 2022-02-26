@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ActivityLogController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\UserActivityLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,11 +41,11 @@ Route::middleware(['guest'])->group(function () {
     // auth
     Route::prefix('auth')->group(function () {
         Route::get('/login', [AuthController::class, 'login'])->name('login');
-        Route::post('/login', [AuthController::class, 'login_process'])->name('login');
+        Route::post('/login', [AuthController::class, 'login_process'])->name('login.process');
         Route::get('/forgot-password', [AuthController::class, 'forgot_password'])->name('forgot-password');
-        Route::post('/forgot-password', [AuthController::class, 'forgot_password_process'])->name('forgot-password');
+        Route::post('/forgot-password', [AuthController::class, 'forgot_password_process'])->name('forgot-password.process');
         Route::get('/reset-password', [AuthController::class, 'reset_password'])->name('reset-password');
-        Route::post('/reset-password', [AuthController::class, 'reset_password_process'])->name('reset-password');
+        Route::post('/reset-password', [AuthController::class, 'reset_password_process'])->name('reset-password.process');
     });
 });
 
@@ -52,39 +54,54 @@ Route::prefix('admin')->group(function () {
     Route::middleware(['admin.guest'])->group(function () {
         // auth
         Route::prefix('auth')->group(function () {
-            Route::get('/login', [AdminAuthController::class, 'login'])->name('admin-login');
-            Route::post('/login', [AdminAuthController::class, 'login_process'])->name('admin-login');
-            Route::get('/forgot-password', [AdminAuthController::class, 'forgot_password'])->name('admin-forgot-password');
-            Route::post('/forgot-password', [AdminAuthController::class, 'forgot_password_process'])->name('admin-forgot-password-process');
-            Route::get('/reset-password', [AdminAuthController::class, 'reset_password'])->name('admin-reset-password');
-            Route::post('/reset-password', [AdminAuthController::class, 'reset_password_process'])->name('admin-reset-password-process');
+            Route::get('/login', [AdminAuthController::class, 'login'])->name('admin.login');
+            Route::post('/login', [AdminAuthController::class, 'login_process'])->name('admin.login.process');
+            Route::get('/forgot-password', [AdminAuthController::class, 'forgot_password'])->name('admin.forgot-password');
+            Route::post('/forgot-password', [AdminAuthController::class, 'forgot_password_process'])->name('admin.forgot-password.process');
+            Route::get('/reset-password', [AdminAuthController::class, 'reset_password'])->name('admin.reset-password');
+            Route::post('/reset-password', [AdminAuthController::class, 'reset_password_process'])->name('admin.reset-password.process');
         });
     });
 
     Route::middleware(['admin.auth'])->group(function () {
         // dashboard
         Route::prefix('dashboard')->group(function () {
-            Route::get('/', [DashboardController::class, 'index'])->name('admin-dashboard');
+            Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
         });
+
         // admins
-        Route::prefix('admins')->group(function () {
-            Route::get('/', [AdminController::class, 'index'])->name('admin-admins');
-        });
+        Route::resource('admins', AdminController::class, [
+            'as' => 'admin',
+        ])->parameters(['admins' => 'id']);
+
         // roles
-        Route::prefix('roles')->group(function () {
-            Route::get('/', [RoleController::class, 'index'])->name('admin-roles');
-        });
+        Route::resource('roles', RoleController::class, [
+            'as' => 'admin'
+        ])->parameters(['roles' => 'id']);
+
         // permissions
-        Route::prefix('permissions')->group(function () {
-            Route::get('/', [PermissionController::class, 'index'])->name('admin-permissions');
-        });
-        // activity-log
-        Route::prefix('activity-log')->group(function () {
-            Route::get('/', [ActivityLogController::class, 'index'])->name('admin-activity-log');
-        });
+        Route::resource('permissions', PermissionController::class, [
+            'as' => 'admin'
+        ])->parameters(['permissions' => 'id']);
+
+        // activity log
+        Route::resource('activity-log', ActivityLogController::class, [
+            'as' => 'admin'
+        ])->parameters(['activity-log' => 'id']);
+
+        // users
+        Route::resource('users', AdminUserController::class, [
+            'as' => 'admin'
+        ])->parameters(['users' => 'id']);
+
+        // user activity log
+        Route::resource('user-activity-log', UserActivityLogController::class, [
+            'as' => 'admin'
+        ])->parameters(['user-activity-log' => 'id']);
+
         // auth
         Route::prefix('auth')->group(function () {
-            Route::get('/logout', [AdminAuthController::class, 'logout'])->name('admin-logout');
+            Route::get('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
         });
     });
 });

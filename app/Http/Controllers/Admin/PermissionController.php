@@ -15,7 +15,7 @@ class PermissionController extends Controller
             'title' => 'Permissions',
             'sidebar_active' => 'permissions',
             'breadcrumbs' => [
-                ['text' => 'Home', 'status' => null, 'link' => route('admin-dashboard')],
+                ['text' => 'Home', 'status' => null, 'link' => route('admin.dashboard')],
                 ['text' => 'Permissions', 'status' => 'active', 'link' => '#'],
             ],
         ];

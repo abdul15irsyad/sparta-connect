@@ -20,7 +20,7 @@
                             @if (session('message'))
                                 @include('includes.alert',['dismissible'=>true,'message'=>session('message'),'type'=>session('type')])
                             @endif
-                            <form action="{{ route('login') }}" method="post" class="signin-form">
+                            <form action="{{ route('login.process') }}" method="post" class="signin-form">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label class="label" for="username">Username</label>

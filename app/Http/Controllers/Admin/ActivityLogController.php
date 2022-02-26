@@ -15,7 +15,7 @@ class ActivityLogController extends Controller
             'title' => 'Activity Log',
             'sidebar_active' => 'activity-log',
             'breadcrumbs' => [
-                ['text' => 'Home', 'status' => null, 'link' => route('admin-dashboard')],
+                ['text' => 'Home', 'status' => null, 'link' => route('admin.dashboard')],
                 ['text' => 'Activity Log', 'status' => 'active', 'link' => '#'],
             ],
         ];

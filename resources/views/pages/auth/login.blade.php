@@ -22,6 +22,9 @@
                             @endif
                             <form action="{{ route('login.process') }}" method="post" class="signin-form">
                                 @csrf
+                                @if (request('from'))
+                                    <input type="hidden" name="_from" value="{{ request('from') }}">
+                                @endif
                                 <div class="form-group mb-3">
                                     <label class="label" for="username">Username</label>
                                     <input type="text" class="form-control" placeholder="username or email"
@@ -35,7 +38,8 @@
                                 <div class="form-group d-md-flex">
                                     <div>
                                         <label class="checkbox-wrap checkbox-primary mb-0">Remember Me
-                                            <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                            <input type="checkbox" name="remember"
+                                                {{ old('remember', true) ? 'checked' : '' }}>
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>

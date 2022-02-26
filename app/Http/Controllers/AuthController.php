@@ -72,6 +72,10 @@ class AuthController extends Controller
         }
         auth('web')->attempt($data, $remember_me);
 
+        if ($request->input('_from') != null && $request->input('_from') != '') {
+            return redirect()->to($request->input('_from'));
+        }
+
         return redirect()->route('home');
     }
 

@@ -16,7 +16,7 @@ class AuthController extends Controller
     public function login()
     {
         $data = [
-            'title' => 'Login'
+            'title' => 'Login',
         ];
         return view('admin.pages.auth.login', $data);
     }
@@ -71,6 +71,10 @@ class AuthController extends Controller
                 ->with('message', 'your account is not active');
         }
         auth('admin')->attempt($data, $remember_me);
+
+        if ($request->input('_from') != null && $request->input('_from') != '') {
+            return redirect()->to($request->input('_from'));
+        }
 
         return redirect()->route('admin.dashboard');
     }

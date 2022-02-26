@@ -11,7 +11,6 @@ class HomeController extends Controller
         $data = [
             'title' => 'Home',
         ];
-        dd(auth('web')->user());
         return view('pages.home', $data);
     }
 }

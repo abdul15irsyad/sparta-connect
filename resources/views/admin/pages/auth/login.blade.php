@@ -16,6 +16,9 @@
                         @endif
                         <form action="{{ route('admin.login.process') }}" method="post" autocomplete="off">
                             @csrf
+                            @if (request('from'))
+                                <input type="hidden" name="_from" value="{{ request('from') }}">
+                            @endif
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" name="username" placeholder="username or email"
                                     value="{{ old('username') }}">
@@ -33,7 +36,8 @@
                                 <div class="col-lg-6 col-12">
                                     <div class="input-group input-password mb-0">
                                         <div class="icheck-primary">
-                                            <input type="checkbox" id="remember" name="remember">
+                                            <input type="checkbox" id="remember" name="remember"
+                                                {{ old('remember', true) ? 'checked' : '' }}>
                                             <label for="remember">Remember Me</label>
                                         </div>
                                     </div>

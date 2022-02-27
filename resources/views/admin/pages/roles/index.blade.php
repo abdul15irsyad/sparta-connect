@@ -28,6 +28,7 @@
                                     <th>Name</th>
                                     {{-- <th>Slug</th> --}}
                                     <th class="desc">Description</th>
+                                    {{-- <th class="permissions">Permissions</th> --}}
                                     <th>Created at</th>
                                     <th class="action">Action</th>
                                 </tr>
@@ -82,6 +83,26 @@
                         name: 'desc',
                         render: data => data && data != '' ? data : 'no description'
                     },
+                    // {
+                    //     data: 'admin_permissions',
+                    //     name: 'admin_permissions',
+                    //     render: data => {
+                    //         let pillText = text =>
+                    //             '<div class="text-pill text-sm alert-default-success">' + text +
+                    //             '</div>'
+                    //         if (data.length == 0)
+                    //             return '<div class="text-center text-sm">No Permission</div>'
+                    //         // max show permission
+                    //         let result = '',
+                    //             max = 3
+                    //         data.forEach((permission, index) => {
+                    //             if (index < max) result += pillText(permission
+                    //                 .name)
+                    //         })
+                    //         result += (data.length > max) ? pillText('etc . . .') : ''
+                    //         return '<div class="text-center">' + result + '</div>'
+                    //     }
+                    // },
                     {
                         data: 'created_at',
                         name: 'created_at',

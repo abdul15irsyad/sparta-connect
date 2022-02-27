@@ -42,6 +42,23 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="form-group col-12">
+                                <label for="permissions">Permissions</label>
+                                <div class="input-group">
+                                    <select class="form-control select2 @error('permissions') is-invalid @enderror"
+                                        id="permissions" name="permissions[]"
+                                        data-placeholder="-- Select Role Permissions --" multiple>
+                                        @foreach ($permissions as $permission)
+                                            <option value="{{ $permission->slug }}"
+                                                <?= old('permissions') == $permission->slug ? 'selected' : '' ?>>
+                                                {{ $permission->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('permissions')
+                                        <span class="invalid-feedback pl-2" role="alert">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
                         <!-- ./card-body -->
                         <div class="card-footer">

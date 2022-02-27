@@ -17,8 +17,18 @@ class AdminRole extends Model
         'updated_at',
     ];
 
+    public function users()
+    {
+        return $this->hasMany(AdminUser::class);
+    }
+
     public function admin_permissions()
     {
         return $this->belongsToMany(AdminPermission::class);
+    }
+
+    public function role_permissions()
+    {
+        return $this->hasMany(AdminRolePermission::class);
     }
 }

@@ -22,5 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AddressSeeder::class);
         $this->call(ContactTypeSeeder::class);
         $this->call(ContactSeeder::class);
+        $this->call(AdminPermissionSeeder::class);
+        $this->call(AdminRolePermissionSeeder::class);
     }
 }

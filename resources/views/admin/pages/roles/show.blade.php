@@ -18,6 +18,15 @@
                             <i class="fas fa-fw fa-calendar-alt text-primary"></i> created at
                             {{ $role->created_at->format('F j, Y') }}
                         </p>
+                        <div class="permissions">
+                            <h5>Role Permissions</h5>
+                            @forelse($role->admin_permissions as $permission)
+                                <div class="permission text-pill alert-default-info mr-1 mb-1 text-sm">
+                                    {{ $permission->name }}</div>
+                            @empty
+                                <div class="text-pill alert-default-danger">No Permission</div>
+                            @endforelse
+                        </div>
                     </div>
                     <div class="card-footer">
                         <div class="row justify-content-end">

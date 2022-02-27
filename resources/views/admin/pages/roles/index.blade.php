@@ -79,7 +79,8 @@
                     // },
                     {
                         data: 'desc',
-                        name: 'desc'
+                        name: 'desc',
+                        render: data => data && data != '' ? data : 'no description'
                     },
                     {
                         data: 'created_at',

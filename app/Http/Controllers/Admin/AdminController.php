@@ -106,7 +106,7 @@ class AdminController extends Controller
         $admin_user->admin_role_id = $admin_role->id;
         $admin_user->save();
 
-        $admin_user = AdminUser::where('username', $request->input('username'))->get();
+        $admin_user = AdminUser::where('username', $request->input('username'))->first();
 
         return redirect()
             ->route('admin.admins.show', ['id' => $admin_user->id])

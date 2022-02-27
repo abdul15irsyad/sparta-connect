@@ -21,7 +21,7 @@
                             <a href="{{ route('admin.admins.create') }}" class="btn btn-primary"><i
                                     class="fas fa-fw fa-plus"></i> Create Admin</a>
                         </div>
-                        <table class="table table-striped datatable vertical-align-middle">
+                        <table class="table table-striped datatable">
                             <thead class="thead-dark">
                                 <tr class="text-center">
                                     <th>#</th>

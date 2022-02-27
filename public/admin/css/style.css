@@ -170,7 +170,7 @@ a.inherit {
 	min-width: 140px;
 }
 
-.table.datatable.vertical-align-middle td {
+.table.datatable td {
 	vertical-align: middle;
 }
 

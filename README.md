@@ -1,5 +1,5 @@
 # Sparta Connect
-Sparta connection app
+Sparta connection app, i hope this application can help us to contact each other 😇😇😇.
 
 ![Sparta Connect Screenshot](https://raw.githubusercontent.com/abdul15irsyad/sparta-connect/master/public/images/login-sparta-connect.jpeg)
 

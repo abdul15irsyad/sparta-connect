@@ -82,7 +82,7 @@ Route::prefix('admin')->group(function () {
         // permissions
         Route::resource('permissions', PermissionController::class, [
             'as' => 'admin'
-        ])->parameters(['permissions' => 'id']);
+        ])->except(['show'])->parameters(['permissions' => 'id']);
 
         // activity log
         Route::resource('activity-log', ActivityLogController::class, [

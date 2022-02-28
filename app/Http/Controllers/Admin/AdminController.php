@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\AdminUser;
 use App\Models\AdminRole;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
@@ -15,6 +14,15 @@ class AdminController extends Controller
 {
     public function datatable(Request $request)
     {
+        $admin = AdminUser::find($request->input('authUserId'));
+        // if the user is not authorize
+        if (!$admin || $admin->cannot('read-admin')) {
+            return response()->json([
+                'status' => false,
+                'msg' => 'invalid credentials',
+            ], 400);
+        }
+
         // if request is not from ajax
         if (!$request->ajax()) {
             return response()->json([
@@ -27,11 +35,14 @@ class AdminController extends Controller
 
         return DataTables::of($data)
             ->addIndexColumn()
-            ->addColumn('action', function ($row) {
+            ->addColumn('action', function ($row) use ($admin) {
                 $btn = '<div class="text-center">';
-                $btn .= '<a href="' . route('admin.admins.show', ['id' => $row->id]) . '" class="btn btn-sm btn-transparent" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-fw fa-info-circle"></i></a>';
-                $btn .= '<a href="' . route('admin.admins.edit', ['id' => $row->id]) . '" class="btn btn-sm btn-transparent" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-fw fa-pen"></i></a>';
-                $btn .= '<button class="btn btn-sm btn-transparent btn-delete text-danger" data-toggle="tooltip" data-placement="top" title="Delete" data-name="' . $row->username . '" data-model="admin" data-link="' . route('admin.admins.destroy', ['id' => $row->id]) . '" data-toggle="modal" data-target=".modal-delete"><i class="fas fa-fw fa-trash-alt"></button>';
+                if ($admin->can('read-admin'))
+                    $btn .= '<a href="' . route('admin.admins.show', ['id' => $row->id]) . '" class="btn btn-sm btn-transparent" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-fw fa-info-circle"></i></a>';
+                if ($admin->can('update-admin'))
+                    $btn .= '<a href="' . route('admin.admins.edit', ['id' => $row->id]) . '" class="btn btn-sm btn-transparent" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-fw fa-pen"></i></a>';
+                if ($admin->can('delete-admin'))
+                    $btn .= '<button class="btn btn-sm btn-transparent btn-delete text-danger" data-toggle="tooltip" data-placement="top" title="Delete" data-name="' . $row->username . '" data-model="admin" data-link="' . route('admin.admins.destroy', ['id' => $row->id]) . '" data-toggle="modal" data-target=".modal-delete"><i class="fas fa-fw fa-trash-alt"></button>';
                 $btn .= '</div>';
                 return $btn;
             })
@@ -41,6 +52,8 @@ class AdminController extends Controller
 
     public function index()
     {
+        $this->authorize('read-admin');
+
         $data = [
             'title' => 'Admins',
             'sidebar_active' => 'admins',
@@ -54,6 +67,8 @@ class AdminController extends Controller
 
     public function show($id)
     {
+        $this->authorize('read-admin');
+
         $admin_user = AdminUser::with(['admin_role'])->findOrFail($id);
 
         $data = [
@@ -71,6 +86,8 @@ class AdminController extends Controller
 
     public function create()
     {
+        $this->authorize('create-admin');
+
         $admin_roles = AdminRole::orderBy('name', 'asc')->get();
         $data = [
             'title' => 'Create Admin',
@@ -87,6 +104,8 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('create-admin');
+
         $this->validate($request, [
             'name' => 'required|min:3',
             'username' => 'required|min:3|regex:/^[a-z0-9\_]+$/|unique:admin_users,username',
@@ -116,6 +135,8 @@ class AdminController extends Controller
 
     public function edit($id)
     {
+        $this->authorize('update-admin');
+
         $admin_user = AdminUser::findOrFail($id);
         $admin_roles = AdminRole::orderBy('name', 'asc')->get();
 
@@ -135,6 +156,8 @@ class AdminController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->authorize('update-admin');
+
         $admin_user = AdminUser::findOrFail($id);
 
         $this->validate($request, [
@@ -174,6 +197,8 @@ class AdminController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('delete-admin');
+
         $admin_user = AdminUser::findOrFail($id);
 
         $super_admins = AdminUser::whereHas('admin_role', fn ($query) => $query->where('slug', 'super-admin'))->get();

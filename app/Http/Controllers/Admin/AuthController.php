@@ -125,20 +125,6 @@ class AuthController extends Controller
         $admin_user->email_verified_at = Carbon::now();
         $admin_user->save();
 
-        // // notify user
-        // $data = [
-        //     'database' => [
-        //         'title' => 'Email Verification Success',
-        //         'desc' => 'your email has been verified'
-        //     ],
-        //     'mail' => [
-        //         'subject' => 'Email Verification Success',
-        //         'markdown' => 'mails.verify-email-success',
-        //         'user' => $admin_user,
-        //     ]
-        // ];
-        // $admin_user->notify(new UserNotification($data));
-
         return redirect()
             ->route('admin.login')
             ->with('type', 'success')

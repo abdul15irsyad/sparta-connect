@@ -17,10 +17,12 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="text-md-right text-center mb-3">
-                            <a href="{{ route('admin.admins.create') }}" class="btn btn-primary"><i
-                                    class="fas fa-fw fa-plus"></i> Create Admin</a>
-                        </div>
+                        @can('create-admin')
+                            <div class="text-md-right text-center mb-3">
+                                <a href="{{ route('admin.admins.create') }}" class="btn btn-primary"><i
+                                        class="fas fa-fw fa-plus"></i> Create Admin</a>
+                            </div>
+                        @endcan
                         <table class="table table-striped datatable">
                             <thead class="thead-dark">
                                 <tr class="text-center">
@@ -31,7 +33,9 @@
                                     <th>Role</th>
                                     <th>Status</th>
                                     <th>Created at</th>
-                                    <th class="action">Action</th>
+                                    @canany(['read-admin', 'update-admin', 'delete-admin'])
+                                        <th class="action">Action</th>
+                                    @endcanany
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,7 +46,9 @@
             </div>
         </section>
         <!-- /.content -->
-        @include('admin.includes.modal-delete')
+        @can('delete-admin')
+            @include('admin.includes.modal-delete')
+        @endcan
     </div>
 @endsection
 
@@ -108,12 +114,14 @@
                                 moment())).humanize(true) + '</div>'
                         }
                     },
-                    {
+                    @canany(['read-admin', 'update-admin', 'delete-admin'])
+                        {
                         data: 'action',
                         name: 'action',
                         orderable: false,
                         searchable: false
-                    },
+                        },
+                    @endcanany
                 ],
                 initComplete: function() {
                     datatableDefaultInitComplete()

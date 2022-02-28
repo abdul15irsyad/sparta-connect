@@ -17,10 +17,12 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="text-md-right text-center mb-3">
-                            <a href="{{ route('admin.permissions.create') }}" class="btn btn-primary"><i
-                                    class="fas fa-fw fa-plus"></i> Create Permission</a>
-                        </div>
+                        @can('create-permission')
+                            <div class="text-md-right text-center mb-3">
+                                <a href="{{ route('admin.permissions.create') }}" class="btn btn-primary"><i
+                                        class="fas fa-fw fa-plus"></i> Create Permission</a>
+                            </div>
+                        @endcan
                         <table class="table table-striped datatable">
                             <thead class="thead-dark">
                                 <tr class="text-center">
@@ -28,7 +30,9 @@
                                     <th>Name</th>
                                     <th>Created at</th>
                                     <th>Updated at</th>
-                                    <th class="action">Action</th>
+                                    @canany(['read-permission', 'update-permission', 'delete-permission'])
+                                        <th class="action">Action</th>
+                                    @endcanany
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,7 +43,9 @@
             </div>
         </section>
         <!-- /.content -->
-        @include('admin.includes.modal-delete')
+        @can('delete-permission')
+            @include('admin.includes.modal-delete')
+        @endcan
     </div>
 @endsection
 
@@ -90,12 +96,14 @@
                                 moment())).humanize(true) + '</div>'
                         }
                     },
-                    {
+                    @canany(['read-permission', 'update-permission', 'delete-permission'])
+                        {
                         data: 'action',
                         name: 'action',
                         orderable: false,
                         searchable: false
-                    },
+                        },
+                    @endcanany
                 ],
                 initComplete: function() {
                     datatableDefaultInitComplete()

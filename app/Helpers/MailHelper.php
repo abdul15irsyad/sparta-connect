@@ -2,10 +2,10 @@
 
 namespace App\Helpers;
 
-use Carbon\Carbon;
 use App\Jobs\SendEMail;
 use App\Helpers\TokenHelper;
 use App\Models\Token;
+use Carbon\Carbon;
 
 class MailHelper
 {

@@ -17,7 +17,7 @@ class AdminRolePermissionSeeder extends Seeder
             ],
             [
                 'slug' => 'admin',
-                'permissions' => [5, 6, 7, 8, 9, 10, 14, 15, 16, 17, 18, 19],
+                'permissions' => [14, 15, 16, 17, 18, 19],
             ],
         ];
 

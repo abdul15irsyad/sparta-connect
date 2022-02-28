@@ -31,68 +31,84 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li
-                    class="nav-item {{ in_array($sidebar_active, ['admins', 'roles', 'permissions', 'activity-log'])? 'menu-is-opening menu-open': '' }}">
-                    <a href="#"
-                        class="nav-link {{ in_array($sidebar_active, ['admins', 'roles', 'permissions', 'activity-log']) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-user-cog"></i>
-                        <p>Admin Management<i class="fas fa-angle-left right"></i></p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('admin.admins.index') }}"
-                                class="nav-link {{ $sidebar_active == 'admins' ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-fw fa-user-cog"></i>
-                                <p>Admins</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.roles.index') }}"
-                                class="nav-link {{ $sidebar_active == 'roles' ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-fw fa-cogs"></i>
-                                <p>Roles</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.permissions.index') }}"
-                                class="nav-link {{ $sidebar_active == 'permissions' ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-fw fa-key"></i>
-                                <p>Permissions</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.activity-log.index') }}"
-                                class="nav-link {{ $sidebar_active == 'activity-log' ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-fw fa-wave-square"></i>
-                                <p>Activity Log</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li
-                    class="nav-item {{ in_array($sidebar_active, ['users', 'user-activity-log']) ? 'menu-is-opening menu-open' : '' }}">
-                    <a href="#"
-                        class="nav-link {{ in_array($sidebar_active, ['users', 'user-activity-log']) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-fw fa-users"></i>
-                        <p>User Management<i class="fas fa-angle-left right"></i></p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('admin.users.index') }}"
-                                class="nav-link {{ $sidebar_active == 'users' ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-fw fa-users"></i>
-                                <p>Users</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.user-activity-log.index') }}"
-                                class="nav-link {{ $sidebar_active == 'user-activity-log' ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-fw fa-wave-square"></i>
-                                <p>User Activity Log</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @canany(['read-admin', 'read-role', 'read-permission', 'read-activity-log'])
+                    <li
+                        class="nav-item {{ in_array($sidebar_active, ['admins', 'roles', 'permissions', 'activity-log'])? 'menu-is-opening menu-open': '' }}">
+                        <a href="#"
+                            class="nav-link {{ in_array($sidebar_active, ['admins', 'roles', 'permissions', 'activity-log']) ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-user-cog"></i>
+                            <p>Admin Management<i class="fas fa-angle-left right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @can('read-admin')
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.admins.index') }}"
+                                        class="nav-link {{ $sidebar_active == 'admins' ? 'active' : '' }}">
+                                        <i class="nav-icon fas fa-fw fa-user-cog"></i>
+                                        <p>Admins</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('read-roles')
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.roles.index') }}"
+                                        class="nav-link {{ $sidebar_active == 'roles' ? 'active' : '' }}">
+                                        <i class="nav-icon fas fa-fw fa-cogs"></i>
+                                        <p>Roles</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('read-permission')
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.permissions.index') }}"
+                                        class="nav-link {{ $sidebar_active == 'permissions' ? 'active' : '' }}">
+                                        <i class="nav-icon fas fa-fw fa-key"></i>
+                                        <p>Permissions</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('read-activity-log')
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.activity-log.index') }}"
+                                        class="nav-link {{ $sidebar_active == 'activity-log' ? 'active' : '' }}">
+                                        <i class="nav-icon fas fa-fw fa-wave-square"></i>
+                                        <p>Activity Log</p>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcanany
+                @canany(['read-user', 'read-user-activity-log'])
+                    <li
+                        class="nav-item {{ in_array($sidebar_active, ['users', 'user-activity-log']) ? 'menu-is-opening menu-open' : '' }}">
+                        <a href="#"
+                            class="nav-link {{ in_array($sidebar_active, ['users', 'user-activity-log']) ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-fw fa-users"></i>
+                            <p>User Management<i class="fas fa-angle-left right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @can('read-user')
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.users.index') }}"
+                                        class="nav-link {{ $sidebar_active == 'users' ? 'active' : '' }}">
+                                        <i class="nav-icon fas fa-fw fa-users"></i>
+                                        <p>Users</p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('read-user-activity-log')
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.user-activity-log.index') }}"
+                                        class="nav-link {{ $sidebar_active == 'user-activity-log' ? 'active' : '' }}">
+                                        <i class="nav-icon fas fa-fw fa-wave-square"></i>
+                                        <p>User Activity Log</p>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcanany
                 <li class="nav-item mt-4">
                     <a href="{{ route('home') }}" class="nav-link" target="_blank">
                         <i class="nav-icon fas fa-house"></i>

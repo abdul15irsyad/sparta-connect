@@ -30,23 +30,29 @@
                                 <a href="{{ route('admin.admins.index') }}" class="btn btn-transparent"><i
                                         class="fas fa-fw fa-chevron-left"></i> Back</a>
                             </div>
-                            <div class="col-auto">
-                                <a href="{{ route('admin.admins.edit', ['id' => $admin_user->id]) }}"
-                                    class="btn btn-info"><i class="fas fa-fw fa-pen"></i> Edit</a>
-                            </div>
-                            <div class="col-auto">
-                                <button class="btn btn-danger btn-delete" data-name="{{ $admin_user->username }}"
-                                    data-model="admin"
-                                    data-link="{{ route('admin.admins.destroy', ['id' => $admin_user->id]) }}"
-                                    data-toggle="modal" data-target=".modal-delete"><i class="fas fa-fw fa-trash-alt"></i>
-                                    Delete</button>
-                            </div>
+                            @can('update-admin')
+                                <div class="col-auto">
+                                    <a href="{{ route('admin.admins.edit', ['id' => $admin_user->id]) }}"
+                                        class="btn btn-info"><i class="fas fa-fw fa-pen"></i> Edit</a>
+                                </div>
+                            @endcan
+                            @can('delete-admin')
+                                <div class="col-auto">
+                                    <button class="btn btn-danger btn-delete" data-name="{{ $admin_user->username }}"
+                                        data-model="admin"
+                                        data-link="{{ route('admin.admins.destroy', ['id' => $admin_user->id]) }}"
+                                        data-toggle="modal" data-target=".modal-delete"><i class="fas fa-fw fa-trash-alt"></i>
+                                        Delete</button>
+                                </div>
+                            @endcan
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         <!-- /.content -->
-        @include('admin.includes.modal-delete')
+        @can('delete-admin')
+            @include('admin.includes.modal-delete')
+        @endcan
     </div>
 @endsection()

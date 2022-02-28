@@ -3,7 +3,7 @@
 namespace App\Helpers;
 
 use App\Models\Token;
-use DB, Str;
+use Illuminate\Support\Str;
 
 class TokenHelper
 {

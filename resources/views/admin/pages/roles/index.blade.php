@@ -17,10 +17,12 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="text-md-right text-center mb-3">
-                            <a href="{{ route('admin.roles.create') }}" class="btn btn-primary"><i
-                                    class="fas fa-fw fa-plus"></i> Create Role</a>
-                        </div>
+                        @can('create-role')
+                            <div class="text-md-right text-center mb-3">
+                                <a href="{{ route('admin.roles.create') }}" class="btn btn-primary"><i
+                                        class="fas fa-fw fa-plus"></i> Create Role</a>
+                            </div>
+                        @endcan
                         <table class="table table-striped datatable">
                             <thead class="thead-dark">
                                 <tr class="text-center">
@@ -30,7 +32,9 @@
                                     <th class="desc">Description</th>
                                     {{-- <th class="permissions">Permissions</th> --}}
                                     <th>Created at</th>
-                                    <th class="action">Action</th>
+                                    @canany(['read-role', 'update-role', 'delete-role'])
+                                        <th class="action">Action</th>
+                                    @endcanany
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,7 +45,9 @@
             </div>
         </section>
         <!-- /.content -->
-        @include('admin.includes.modal-delete')
+        @can('delete-role')
+            @include('admin.includes.modal-delete')
+        @endcan
     </div>
 @endsection
 
@@ -86,6 +92,8 @@
                     // {
                     //     data: 'admin_permissions',
                     //     name: 'admin_permissions',
+                    //     orderable: false,
+                    //     serachable: false,
                     //     render: data => {
                     //         let pillText = text =>
                     //             '<div class="text-pill text-sm alert-default-success">' + text +
@@ -112,12 +120,14 @@
                                 moment())).humanize(true) + '</div>'
                         }
                     },
-                    {
+                    @canany(['read-role', 'update-role', 'delete-role'])
+                        {
                         data: 'action',
                         name: 'action',
                         orderable: false,
                         searchable: false
-                    },
+                        },
+                    @endcanany
                 ],
                 initComplete: function() {
                     datatableDefaultInitComplete()

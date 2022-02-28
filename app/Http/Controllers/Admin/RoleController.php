@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AdminPermission;
 use App\Models\AdminRole;
 use App\Models\AdminRolePermission;
+use App\Models\AdminUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
@@ -21,6 +22,15 @@ class RoleController extends Controller
 
     public function datatable(Request $request)
     {
+        $admin = AdminUser::find($request->input('authUserId'));
+        // if the user is not authorize
+        if (!$admin || $admin->cannot('read-role')) {
+            return response()->json([
+                'status' => false,
+                'msg' => 'invalid credentials',
+            ], 400);
+        }
+
         // if request is not from ajax
         if (!$request->ajax()) {
             return response()->json([
@@ -33,12 +43,16 @@ class RoleController extends Controller
 
         return DataTables::of($data)
             ->addIndexColumn()
-            ->addColumn('action', function ($row) {
+            ->addColumn('action', function ($row) use ($admin) {
                 $btn = '<div class="text-center">';
-                $btn .= '<a href="' . route('admin.roles.show', ['id' => $row->id]) . '" class="btn btn-sm btn-transparent" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-fw fa-info-circle"></i></a>';
-                $btn .= '<a href="' . route('admin.roles.edit', ['id' => $row->id]) . '" class="btn btn-sm btn-transparent" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-fw fa-pen"></i></a>';
-                if (!in_array($row->slug, ['super-admin', 'admin'])) {
-                    $btn .= '<button class="btn btn-sm btn-transparent btn-delete text-danger" data-toggle="tooltip" data-placement="top" title="Delete" data-name="' . $row->name . '" data-model="role" data-link="' . route('admin.roles.destroy', ['id' => $row->id]) . '" data-toggle="modal" data-target=".modal-delete"><i class="fas fa-fw fa-trash-alt"></button>';
+                if ($admin->can('read-role'))
+                    $btn .= '<a href="' . route('admin.roles.show', ['id' => $row->id]) . '" class="btn btn-sm btn-transparent" data-toggle="tooltip" data-placement="top" title="Detail"><i class="fas fa-fw fa-info-circle"></i></a>';
+                if ($admin->can('update-role'))
+                    $btn .= '<a href="' . route('admin.roles.edit', ['id' => $row->id]) . '" class="btn btn-sm btn-transparent" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fas fa-fw fa-pen"></i></a>';
+                if ($admin->can('delete-role')) {
+                    if (!in_array($row->slug, ['super-admin', 'admin'])) {
+                        $btn .= '<button class="btn btn-sm btn-transparent btn-delete text-danger" data-toggle="tooltip" data-placement="top" title="Delete" data-name="' . $row->name . '" data-model="role" data-link="' . route('admin.roles.destroy', ['id' => $row->id]) . '" data-toggle="modal" data-target=".modal-delete"><i class="fas fa-fw fa-trash-alt"></button>';
+                    }
                 }
                 $btn .= '</div>';
                 return $btn;
@@ -49,6 +63,8 @@ class RoleController extends Controller
 
     public function index()
     {
+        $this->authorize('read-role');
+
         $data = [
             'title' => 'Roles',
             'sidebar_active' => 'roles',
@@ -62,6 +78,8 @@ class RoleController extends Controller
 
     public function show($id)
     {
+        $this->authorize('read-role');
+
         $role = AdminRole::with(['admin_permissions'])->findOrFail($id);
 
         $data = [
@@ -79,6 +97,8 @@ class RoleController extends Controller
 
     public function create()
     {
+        $this->authorize('create-role');
+
         $permissions = AdminPermission::OrderBy('created_at', 'asc')->get();
 
         $data = [
@@ -96,6 +116,8 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('create-role');
+
         $request->merge([
             'slug' => Str::slug($request->input('name'))
         ]);
@@ -135,6 +157,8 @@ class RoleController extends Controller
 
     public function edit($id)
     {
+        $this->authorize('update-role');
+
         $role = AdminRole::findOrFail($id);
         $permissions = AdminPermission::OrderBy('created_at', 'asc')->get();
 
@@ -160,6 +184,8 @@ class RoleController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->authorize('update-role');
+
         $role = AdminRole::findOrFail($id);
 
         if (!in_array($role->slug, $this->except_roles)) {
@@ -209,6 +235,8 @@ class RoleController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('delete-role');
+
         $role = AdminRole::findOrFail($id);
 
         if (in_array($role->slug, $this->except_roles)) {
